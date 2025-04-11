@@ -41,7 +41,7 @@ app.post("/api/chat", async (req, res) => {
           { role: "system", content: "You are a helpful assistant for Bradley's projects." },
           { role: "user", content: message }
         ],
-        model: "grok-3-latest",
+        model: "grok", // Use "grok" instead of "grok-3-latest"
         stream: false,
         temperature: 0,
         max_tokens: 50
@@ -49,10 +49,10 @@ app.post("/api/chat", async (req, res) => {
     });
     const data = await response.json();
     console.log("xAI response:", data);
-    if (data.choices && data.choices[0] && data.choices[0].message) {
+    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
       res.json({ reply: data.choices[0].message.content });
     } else {
-      res.status(500).json({ error: "Invalid response from xAI API" });
+      res.status(500).json({ error: "Invalid response from xAI API", details: data });
     }
   } catch (error) {
     console.error("xAI error:", error.message, error.response ? error.response.data : "");
