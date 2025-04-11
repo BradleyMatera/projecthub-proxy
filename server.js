@@ -41,7 +41,7 @@ app.post("/api/chat", async (req, res) => {
           { role: "system", content: "You are a helpful assistant for Bradley's projects." },
           { role: "user", content: message }
         ],
-        model: "grok", // Use "grok" instead of "grok-3-latest"
+        model: "grok-3-latest", // Updated model name
         stream: false,
         temperature: 0,
         max_tokens: 50
