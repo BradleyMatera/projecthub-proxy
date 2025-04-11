@@ -30,14 +30,17 @@ app.post("/api/chat", async (req, res) => {
   if (!message) return res.status(400).json({ error: "Message required" });
 
   try {
+    console.log("Received message:", message);
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: message }],
       max_tokens: 50
     });
+    console.log("OpenAI response:", response.data);
     res.json({ reply: response.data.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong" });
+    console.error("OpenAI error:", error.message, error.response ? error.response.data : "");
+    res.status(500).json({ error: "Something went wrong", details: error.message });
   }
 });
 
