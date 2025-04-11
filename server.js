@@ -41,7 +41,7 @@ app.post("/api/chat", async (req, res) => {
           { role: "system", content: "You are a helpful assistant for Bradley's projects." },
           { role: "user", content: message }
         ],
-        model: "grok-3-latest", // Updated model name
+        model: "grok-3-latest", // Ensure model matches the working direct curl
         stream: false,
         temperature: 0,
         max_tokens: 50
