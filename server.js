@@ -8,8 +8,16 @@ const app = express();
 // Enable trust proxy to handle X-Forwarded-For header
 app.set("trust proxy", 1);
 
-// CORS: Restrict to your CodePen domain
-app.use(cors({ origin: "https://codepen.io", methods: ["POST", "OPTIONS"] }));
+// CORS: Allow CodePen with proper headers
+app.use(cors({
+  origin: "https://codepen.io",
+  methods: ["POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true
+}));
+
+// Handle CORS preflight requests
+app.options("/api/chat", cors());
 
 // Rate limiting: 100 requests per 15 minutes per IP
 const limiter = rateLimit({
@@ -30,6 +38,7 @@ app.post("/api/chat", async (req, res) => {
 
   try {
     console.log("Received message:", message);
+    console.log("Using XAI_API_KEY:", XAI_API_KEY ? "Set (hidden)" : "Not set");
     const response = await fetch("https://api.x.ai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -41,14 +50,14 @@ app.post("/api/chat", async (req, res) => {
           { role: "system", content: "You are a helpful assistant for Bradley's projects." },
           { role: "user", content: message }
         ],
-        model: "grok-3-latest", // Ensure model matches the working direct curl
+        model: "grok-3-beta",
         stream: false,
         temperature: 0,
         max_tokens: 50
       })
     });
     const data = await response.json();
-    console.log("xAI response:", data);
+    console.log("xAI response:", JSON.stringify(data, null, 2));
     if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
       res.json({ reply: data.choices[0].message.content });
     } else {
