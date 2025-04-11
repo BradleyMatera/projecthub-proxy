@@ -5,6 +5,9 @@ const rateLimit = require("express-rate-limit");
 
 const app = express();
 
+// Enable trust proxy to handle X-Forwarded-For header
+app.set("trust proxy", 1);
+
 // CORS: Restrict to your CodePen domain
 app.use(cors({ origin: "https://codepen.io", methods: ["POST", "OPTIONS"] }));
 
