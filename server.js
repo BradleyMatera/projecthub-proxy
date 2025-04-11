@@ -10,7 +10,7 @@ app.set("trust proxy", 1);
 
 // CORS: Allow CodePen's actual origin (cdpn.io) and handle preflight
 app.use(cors({
-  origin: ["https://codepen.io", "https://cdpn.io"], // Allow both CodePen domains
+  origin: ["https://codepen.io", "https://cdpn.io"],
   methods: ["POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
   credentials: true
@@ -47,13 +47,13 @@ app.post("/api/chat", async (req, res) => {
       },
       body: JSON.stringify({
         messages: [
-          { role: "system", content: "You are a helpful assistant for Bradley's projects." },
+          { role: "system", content: "You are a helpful assistant for Bradley Matera's web development projects. Provide detailed, accurate information about Bradley's projects, CodePens, GitHub, LinkedIn, skills, and experience as a web developer. Do not assume the user is Bradley; treat the user as someone seeking information about him." },
           { role: "user", content: message }
         ],
         model: "grok-3-beta",
         stream: false,
         temperature: 0,
-        max_tokens: 50
+        max_tokens: 200 // Increased to allow longer responses
       })
     });
     const data = await response.json();
