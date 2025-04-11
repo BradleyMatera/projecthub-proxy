@@ -1,0 +1,12 @@
+{
+  "name": "projecthub-proxy",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "express": "^4.17.1",
+    "openai": "^3.2.1",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^6.7.0"
+  }
+}
