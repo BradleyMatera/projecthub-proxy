@@ -53,7 +53,7 @@ app.post("/api/chat", async (req, res) => {
         model: "grok-3-beta",
         stream: false,
         temperature: 0,
-        max_tokens: 200 // Increased to allow longer responses
+        max_tokens: 500 // Increased to allow longer responses
       })
     });
     const data = await response.json();
