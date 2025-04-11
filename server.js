@@ -8,9 +8,9 @@ const app = express();
 // Enable trust proxy to handle X-Forwarded-For header
 app.set("trust proxy", 1);
 
-// CORS: Allow CodePen with proper headers
+// CORS: Allow CodePen's actual origin (cdpn.io) and handle preflight
 app.use(cors({
-  origin: "https://codepen.io",
+  origin: ["https://codepen.io", "https://cdpn.io"], // Allow both CodePen domains
   methods: ["POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
   credentials: true
