@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": { "start": "node server.js" },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.22.1",
     "cors": "^2.8.5",
     "express-rate-limit": "^6.7.0",
     "node-fetch": "^2.6.1"
